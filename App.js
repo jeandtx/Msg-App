@@ -7,6 +7,8 @@ import WelcomeScreen from "./app/screens/WelcomeScreen";
 import FirstTry from "./app/screens/FirstTry";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import LoginScreen from "./app/screens/LoginScreen";
+import ChatScreen from "./app/screens/ChatScreen";
 
 export default function App() {
 	const Stack = createStackNavigator();
@@ -14,6 +16,16 @@ export default function App() {
 	return (
 		<NavigationContainer>
 			<Stack.Navigator>
+				<Stack.Screen
+					name="Login"
+					component={LoginScreen}
+					options={{ title: "Login" }}
+				/>
+				<Stack.Screen
+					name="Chat"
+					component={ChatScreen}
+					options={{ title: "Chat" }}
+				/>
 				<Stack.Screen
 					name="Home"
 					component={WelcomeScreen}
