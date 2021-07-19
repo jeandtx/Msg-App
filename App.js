@@ -24,6 +24,11 @@ export default function App() {
 					component={ViewImageScreen}
 					options={{ title: "ViewImageScreen" }}
 				/>
+				<Stack.Screen
+					name="FirstTry"
+					component={FirstTry}
+					options={{ title: "FirstTry" }}
+				/>
 			</Stack.Navigator>
 		</NavigationContainer>
 	);
