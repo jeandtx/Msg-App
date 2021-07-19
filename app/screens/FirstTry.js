@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useState } from "react";
 import {
 	StyleSheet,
 	Text,
@@ -12,54 +12,22 @@ import {
 	Button,
 	Alert,
 	Dimensions,
+	TextInput,
 } from "react-native";
 
 function FirstTry(props) {
-	const handlePress = () => alert("You touched the text !!");
-
+	const [text, setText] = useState("");
 	return (
-		<SafeAreaView style={styles.container}>
-			<Button
-				color="orange"
-				title="Button"
-				onPress={() => alert("You pressed the button")}
-			/>
-			<TouchableOpacity
-				onPress={() =>
-					Alert.alert("Feedback is here!", "more text", [
-						{ text: "OkAY", onPress: () => console.log("Yes") },
-						{
-							text: "Not Okay",
-							onPress: () =>
-								Alert.prompt(
-									"Why ¿",
-									"Please explain why you're not okay and with what",
-									(text) => console.log(text)
-								),
-						},
-					])
-				}
-			>
-				<Image
-					source={{
-						width: 300,
-						height: 300,
-						uri: "http://vignette3.wikia.nocookie.net/ssbb/images/c/cd/Toon_Link_Phantom_Hourglass.png/revision/latest?cb=20120827125123&path-prefix=es",
-					}}
+		<View style={styles.container}>
+			<SafeAreaView>
+				<TextInput
+					style={styles.login}
+					value={text}
+					onChangeText={(text) => setText(text)}
 				/>
-			</TouchableOpacity>
-			<View style={{ backgroundColor: "red", flex: 0.2 }}>
-				<Text>This is some text in the red box</Text>
-			</View>
-			<Text
-				numberOfLines={2}
-				onPress={handlePress}
-				style={{ flex: 1, paddingTop: "50%" }}
-			>
-				Welcome in TRENDS ! Not so many things for now but it's comming
-			</Text>
-			<StatusBar style="auto" />
-		</SafeAreaView>
+				<Button title="log" onPress={() => console.log({ text })} />
+			</SafeAreaView>
+		</View>
 	);
 }
 
@@ -68,8 +36,16 @@ export default FirstTry;
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: "gold",
+		backgroundColor: "#0E0175",
 		alignItems: "center",
 		justifyContent: "center",
+	},
+	login: {
+		backgroundColor: "#A900FF",
+		height: 50,
+		color: "black",
+		borderRadius: 15,
+		padding: 15,
+		fontSize: 20,
 	},
 });
