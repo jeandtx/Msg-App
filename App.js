@@ -38,13 +38,13 @@ export default function App() {
 				<Stack.Screen
 					name="Login"
 					component={Login}
-					options={{ title: "Login", headerShown: false}}
+					options={{ title: "Login", headerShown: false }}
 				/>
 				<Stack.Screen
 					name="Welcome"
 					component={Welcome}
 					options={{ title: "Welcome" }}
-				/> 
+				/>
 			</Stack.Navigator>
 		</NavigationContainer>
 	);
