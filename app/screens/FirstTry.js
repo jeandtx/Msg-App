@@ -7,7 +7,6 @@ function FirstTry(props) {
 	const [Password, setPassword] = useState("");
 
 	const ref_input2 = useRef();
-	
 
 	return (
 		<View style={styles.container}>
@@ -23,7 +22,7 @@ function FirstTry(props) {
 				/>
 				<Text style={{ padding: 5 }}></Text>
 				<TextInput
-					refInner={ref_input2}
+					ref={ref_input2}
 					style={styles.login}
 					value={Password}
 					onChangeText={(Password) => setPassword(Password)}
