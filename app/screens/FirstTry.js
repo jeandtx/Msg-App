@@ -16,16 +16,33 @@ import {
 } from "react-native";
 
 function FirstTry(props) {
-	const [text, setText] = useState("");
+	const [Username, setUsername] = useState("");
+	const [Password, setPassword] = useState("");
+	function enter(key) {
+		console.log(key);
+	}
 	return (
 		<View style={styles.container}>
 			<SafeAreaView>
 				<TextInput
 					style={styles.login}
-					value={text}
-					onChangeText={(text) => setText(text)}
+					value={Username}
+					onChangeText={(Username) => setUsername(Username)}
+					placeholder="Username"
 				/>
-				<Button title="log" onPress={() => console.log({ text })} />
+				<Text style={{ padding: 5 }}></Text>
+				<TextInput
+					style={styles.login}
+					value={Password}
+					onChangeText={(Password) => setPassword(Password)}
+					placeholder="Password"
+					secureTextEntry={true}
+					onKeyPress={(m) => console.log("Worked !")}
+				/>
+				<Button
+					title="log data"
+					onPress={() => console.log({ Username, Password })}
+				/>
 			</SafeAreaView>
 		</View>
 	);
@@ -40,6 +57,7 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
 	},
+
 	login: {
 		backgroundColor: "#A900FF",
 		height: 50,
@@ -47,5 +65,6 @@ const styles = StyleSheet.create({
 		borderRadius: 15,
 		padding: 15,
 		fontSize: 20,
+		width: 350,
 	},
 });
