@@ -1,28 +1,14 @@
-import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
-import {
-	StyleSheet,
-	Text,
-	View,
-	TouchableWithoutFeedback,
-	SafeAreaView,
-	Image,
-	TouchableOpacity,
-	TouchableHighlight,
-	Button,
-	Alert,
-	Dimensions,
-	TextInput,
-} from "react-native";
+import React, { useState, useRef } from "react";
+import colors from "../config/colors";
+import { StyleSheet, Text, View, SafeAreaView, TextInput } from "react-native";
 
 function FirstTry(props) {
 	const [Username, setUsername] = useState("");
 	const [Password, setPassword] = useState("");
-	function enter(key) {
-		if (key.nativeEvent.key == "Retour") {
-			console.log("Enter pressed !");
-		}
-	}
+
+	const ref_input2 = useRef();
+	
+
 	return (
 		<View style={styles.container}>
 			<SafeAreaView>
@@ -32,13 +18,12 @@ function FirstTry(props) {
 					onChangeText={(Username) => setUsername(Username)}
 					placeholder="Username"
 					returnKeyType="next"
-					enablesReturnKeyAutomatically={true}
-					onSubmitEditing={() =>
-						console.log("Go to the next prompt ")
-					}
+					// enablesReturnKeyAutomatically={true}
+					onSubmitEditing={() => ref_input2.current.focus()}
 				/>
 				<Text style={{ padding: 5 }}></Text>
 				<TextInput
+					refInner={ref_input2}
 					style={styles.login}
 					value={Password}
 					onChangeText={(Password) => setPassword(Password)}
@@ -46,7 +31,12 @@ function FirstTry(props) {
 					secureTextEntry={true}
 					returnKeyType="go"
 					enablesReturnKeyAutomatically={true}
-					onSubmitEditing={() => console.log({ Username, Password })}
+					onSubmitEditing={() =>
+						console.log(
+							{ Username, Password },
+							"Go to the next screen with this login "
+						)
+					}
 				/>
 			</SafeAreaView>
 		</View>
@@ -58,15 +48,15 @@ export default FirstTry;
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: "#0E0175",
+		backgroundColor: colors.primary,
 		alignItems: "center",
 		justifyContent: "center",
 	},
 
 	login: {
-		backgroundColor: "#A900FF",
+		backgroundColor: colors.secondary,
 		height: 50,
-		color: "black",
+		color: colors.text,
 		borderRadius: 15,
 		padding: 15,
 		fontSize: 20,
