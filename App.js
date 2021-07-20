@@ -2,9 +2,9 @@ import "react-native-gesture-handler";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import ViewImageScreen from "./app/screens/ViewImageScreen";
+import Welcome from "./app/screens/Welcome";
 import WelcomeScreen from "./app/screens/WelcomeScreen";
-import FirstTry from "./app/screens/FirstTry";
+import Login from "./app/screens/Login";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import LoginScreen from "./app/screens/LoginScreen";
@@ -34,16 +34,17 @@ export default function App() {
 					component={WelcomeScreen}
 					options={{ title: "Welcome" }}
 				/>
+				*/}
 				<Stack.Screen
-					name="ViewImageScreen"
-					component={ViewImageScreen}
-					options={{ title: "ViewImageScreen" }}
-				/> */}
-				<Stack.Screen
-					name="FirstTry"
-					component={FirstTry}
-					options={{ title: "FirstTry", headerShown: false}}
+					name="Login"
+					component={Login}
+					options={{ title: "Login", headerShown: false}}
 				/>
+				<Stack.Screen
+					name="Welcome"
+					component={Welcome}
+					options={{ title: "Welcome" }}
+				/> 
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

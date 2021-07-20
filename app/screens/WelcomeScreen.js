@@ -30,7 +30,7 @@ function WelcomeScreen({navigation}) {
 			>
 				<Button
 					title="View Image Screen"
-					onPress={() => navigation.navigate("ViewImageScreen")}
+					onPress={() => navigation.navigate("Welcome")}
 				/>
 			</View>
 			<View style={styles.loginButton}></View>
