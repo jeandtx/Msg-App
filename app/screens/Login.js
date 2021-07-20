@@ -3,7 +3,6 @@ import colors from "../config/colors";
 import {
 	StyleSheet,
 	Text,
-	View,
 	SafeAreaView,
 	TextInput,
 	Keyboard,
@@ -18,41 +17,40 @@ function Login({ navigation }) {
 
 	function check_auth() {
 		console.log({ Username, Password });
+
 		// Check auth before with db
 		if (true) {
-			navigation.navigate("Welcome");
+			navigation.navigate("Welcome", { user: Username });
 		}
 	}
 
 	return (
 		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-			<View style={styles.container}>
-				<SafeAreaView>
-					<TextInput
-						style={styles.login}
-						value={Username}
-						onChangeText={(Username) => setUsername(Username)}
-						placeholder="Username"
-						returnKeyType="next"
-						enablesReturnKeyAutomatically={true}
-						onSubmitEditing={() => ref_input2.current.focus()}
-						autoCorrect={false}
-					/>
-					<Text style={{ padding: 5 }}></Text>
-					<TextInput
-						ref={ref_input2}
-						style={styles.login}
-						value={Password}
-						onChangeText={(Password) => setPassword(Password)}
-						placeholder="Password"
-						secureTextEntry={true}
-						autoCorrect={false}
-						returnKeyType="go"
-						enablesReturnKeyAutomatically={true}
-						onSubmitEditing={() => check_auth()}
-					/>
-				</SafeAreaView>
-			</View>
+			<SafeAreaView style={styles.container}>
+				<TextInput
+					style={styles.login}
+					value={Username}
+					onChangeText={(Username) => setUsername(Username)}
+					placeholder="Username"
+					returnKeyType="next"
+					enablesReturnKeyAutomatically={true}
+					onSubmitEditing={() => ref_input2.current.focus()}
+					autoCorrect={false}
+				/>
+				<Text style={{ padding: 5 }}></Text>
+				<TextInput
+					ref={ref_input2}
+					style={styles.login}
+					value={Password}
+					onChangeText={(Password) => setPassword(Password)}
+					placeholder="Password"
+					secureTextEntry={true}
+					autoCorrect={false}
+					returnKeyType="go"
+					enablesReturnKeyAutomatically={true}
+					onSubmitEditing={() => check_auth()}
+				/>
+			</SafeAreaView>
 		</TouchableWithoutFeedback>
 	);
 }
@@ -71,7 +69,7 @@ const styles = StyleSheet.create({
 		backgroundColor: colors.secondary,
 		height: 50,
 		color: colors.text,
-		borderRadius: 15,
+		borderRadius: 18,
 		padding: 15,
 		fontSize: 20,
 		width: 350,
