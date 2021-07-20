@@ -19,7 +19,9 @@ function FirstTry(props) {
 	const [Username, setUsername] = useState("");
 	const [Password, setPassword] = useState("");
 	function enter(key) {
-		console.log(key);
+		if (key.nativeEvent.key == "Retour") {
+			console.log("Enter pressed !");
+		}
 	}
 	return (
 		<View style={styles.container}>
@@ -29,6 +31,11 @@ function FirstTry(props) {
 					value={Username}
 					onChangeText={(Username) => setUsername(Username)}
 					placeholder="Username"
+					returnKeyType="next"
+					enablesReturnKeyAutomatically={true}
+					onSubmitEditing={() =>
+						console.log("Go to the next prompt ")
+					}
 				/>
 				<Text style={{ padding: 5 }}></Text>
 				<TextInput
@@ -37,11 +44,9 @@ function FirstTry(props) {
 					onChangeText={(Password) => setPassword(Password)}
 					placeholder="Password"
 					secureTextEntry={true}
-					onKeyPress={(m) => console.log("Worked !")}
-				/>
-				<Button
-					title="log data"
-					onPress={() => console.log({ Username, Password })}
+					returnKeyType="go"
+					enablesReturnKeyAutomatically={true}
+					onSubmitEditing={() => console.log({ Username, Password })}
 				/>
 			</SafeAreaView>
 		</View>
