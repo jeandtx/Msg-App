@@ -2,16 +2,16 @@ import React, { useState, useRef } from "react";
 import colors from "../config/colors";
 import { StyleSheet, Text, View, SafeAreaView, TextInput } from "react-native";
 
-function Login({navigation}) {
+function Login({ navigation }) {
 	const [Username, setUsername] = useState("");
 	const [Password, setPassword] = useState("");
 
 	const ref_input2 = useRef();
 
-	function check_auth(){
-		console.log({Username, Password})
+	function check_auth() {
+		console.log({ Username, Password });
 		// Check auth before with db
-		navigation.navigate("Welcome")
+		navigation.navigate("Welcome");
 	}
 
 	return (
@@ -25,7 +25,7 @@ function Login({navigation}) {
 					returnKeyType="next"
 					enablesReturnKeyAutomatically={true}
 					onSubmitEditing={() => ref_input2.current.focus()}
-					autoCorrect= {false}
+					autoCorrect={false}
 				/>
 				<Text style={{ padding: 5 }}></Text>
 				<TextInput
@@ -35,7 +35,7 @@ function Login({navigation}) {
 					onChangeText={(Password) => setPassword(Password)}
 					placeholder="Password"
 					secureTextEntry={true}
-					autoCorrect= {false}
+					autoCorrect={false}
 					returnKeyType="go"
 					enablesReturnKeyAutomatically={true}
 					onSubmitEditing={() => check_auth()}
