@@ -1,17 +1,30 @@
-import React, { useLayoutEffect, useState, useCallback } from "react";
-import {
-	StyleSheet,
-	TouchableWithoutFeedback,
-	Keyboard,
-	View,
-} from "react-native";
+import React, {
+	useLayoutEffect,
+	useState,
+	useCallback,
+	useEffect,
+} from "react";
+import { StyleSheet, TouchableWithoutFeedback, Keyboard } from "react-native";
 import colors from "../config/colors";
 import { auth, db } from "../firebase";
 import { GiftedChat } from "react-native-gifted-chat";
+import initialMessages from "./messages";
+import {
+	renderInputToolbar,
+	renderActions,
+	renderComposer,
+	renderSend,
+} from "./InputToolbar";
+import {
+	renderAvatar,
+	renderBubble,
+	renderSystemMessage,
+	renderMessage,
+	renderMessageText,
+	renderCustomView,
+} from "./MessageContainer";
 
 function Welcome(props) {
-	const [messages, setMessages] = useState([]);
-
 	useLayoutEffect(() => {
 		const unsuscribe = db
 			.collection("chats")
@@ -52,45 +65,59 @@ function Welcome(props) {
 			});
 	};
 
+	
+	useEffect(() => {
+		setMessages(initialMessages.reverse());
+	}, []);
+	
+	const [text, setText] = useState("");
+	const [messages, setMessages] = useState([]);
 	return (
 		<TouchableWithoutFeedback
 			onPress={Keyboard.dismiss}
-			style={styles.container}
 		>
 			<GiftedChat
 				messages={messages}
-				onSend={(messages) => onSend(messages)}
+				text={text}
+				onInputTextChanged={setText}
+				onSend={onSend}
 				user={{
 					_id: auth?.currentUser?.displayName,
 					name: auth?.currentUser?.displayName,
+					avatar: "https://placeimg.com/150/150/any",
 				}}
-				showUserAvatar
+				alignTop
+				alwaysShowSend
+				scrollToBottom
+				// showUserAvatar
+				renderAvatarOnTop
+				renderUsernameOnMessage
+				bottomOffset={26}
+				onPressAvatar={console.log}
+				renderInputToolbar={renderInputToolbar}
+				renderActions={renderActions}
+				renderComposer={renderComposer}
+				renderSend={renderSend}
+				renderAvatar={renderAvatar}
+				renderBubble={renderBubble}
+				renderSystemMessage={renderSystemMessage}
+				renderMessage={renderMessage}
+				renderMessageText={renderMessageText}
+				// renderMessageImage
+				renderCustomView={renderCustomView}
+				isCustomViewBottom
+				messagesContainerStyle={{ backgroundColor: "indigo" }}
+				parsePatterns={(linkStyle) => [
+					{
+						pattern: /#(\w+)/,
+						style: linkStyle,
+						onPress: (tag) =>
+							console.log(`Pressed on hashtag: ${tag}`),
+					},
+				]}
 			/>
 		</TouchableWithoutFeedback>
 	);
 }
 
 export default Welcome;
-
-const styles = StyleSheet.create({
-	container: {
-		backgroundColor: colors.primary,
-		flex: 1,
-		alignItems: "center",
-		justifyContent: "flex-end",
-	},
-	publish: {
-		backgroundColor: colors.secondary,
-		height: 60,
-		color: colors.text,
-		paddingTop: 15,
-		paddingLeft: 15,
-		paddingBottom: 20,
-		borderRadius: 5,
-		width: 428,
-		fontSize: 20,
-	},
-	chat: {
-		width: 428,
-	},
-});

@@ -1,14 +1,10 @@
 import "react-native-gesture-handler";
-import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import Welcome from "./app/screens/Welcome";
-import WelcomeScreen from "./app/screens/WelcomeScreen";
 import Login from "./app/screens/Login";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import LoginScreen from "./app/screens/LoginScreen";
-import ChatScreen from "./app/screens/ChatScreen";
 
 export default function App() {
 	const Stack = createStackNavigator();
