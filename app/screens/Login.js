@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import colors from "../config/colors";
 import {
 	StyleSheet,
@@ -8,20 +8,63 @@ import {
 	Keyboard,
 	TouchableWithoutFeedback,
 } from "react-native";
+import { auth } from "../firebase";
 
 function Login({ navigation }) {
+	auth.signOut();
 	const [Username, setUsername] = useState("");
 	const [Password, setPassword] = useState("");
 
 	const ref_input2 = useRef();
 
+	useEffect(() => {
+		const unsuscribe = auth.onAuthStateChanged(function (user) {
+			if (user) {
+				console.log("User is signed in !");
+			} else {
+				console.log("No user is signed in !");
+			}
+		});
+
+		return unsuscribe;
+	}, []);
+
+	const register = () => {
+		auth.createUserWithEmailAndPassword(Username, Password)
+			.then((userCredential) => {
+				var user = userCredential.user;
+				user.updateProfile({
+					displayName: Username,
+				})
+					.then(function () {})
+					.catch(function (error) {});
+			})
+			.catch((error) => {
+				var errorMessage = error.message;
+				alert(errorMessage);
+			});
+	};
+
+	const signIn = () => {
+		auth.signInWithEmailAndPassword(Username, Password).catch((error) => {
+			var errorCode = error.code;
+			var errorMessage = error.message;
+			alert(errorMessage);
+		});
+	};
+
 	function check_auth() {
 		console.log({ Username, Password });
+		// register();
+		signIn();
 
-		// Check auth before with db
-		if (true) {
-			navigation.navigate("Welcome", { user: Username });
-		}
+		auth.onAuthStateChanged(function (user) {
+			if (user) {
+				navigation.replace("Welcome", { user: Username });
+			} else {
+				navigation.replace("Login");
+			}
+		});
 	}
 
 	return (

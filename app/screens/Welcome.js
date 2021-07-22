@@ -1,50 +1,71 @@
-import React, { useState } from "react";
+import React, { useLayoutEffect, useState, useCallback } from "react";
 import {
 	StyleSheet,
-	View,
 	TouchableWithoutFeedback,
-	TextInput,
 	Keyboard,
-	KeyboardAvoidingView,
+	View,
 } from "react-native";
 import colors from "../config/colors";
+import { auth, db } from "../firebase";
+import { GiftedChat } from "react-native-gifted-chat";
 
 function Welcome(props) {
-	const [Message, setMessage] = useState("");
-	var hour = new Date().getHours();
-	var minute = new Date().getMinutes();
+	const [messages, setMessages] = useState([]);
 
-	function publish() {
-		console.log(
-			props.route.params.user,
-			"has pubished: '",
-			Message,
-			"', at ",
-			hour,
-			":",
-			minute
+	useLayoutEffect(() => {
+		const unsuscribe = db
+			.collection("chats")
+			.orderBy("createdAt", "desc")
+			.onSnapshot((snapshot) =>
+				setMessages(
+					snapshot.docs.map((doc) => ({
+						_id: doc.data()._id,
+						createdAt: doc.data().createdAt.toDate(),
+						text: doc.data().text,
+						user: doc.data().user,
+					}))
+				)
+			);
+		return unsuscribe;
+	}, []);
+
+	const onSend = useCallback((messages = []) => {
+		setMessages((previousMessages) =>
+			GiftedChat.append(previousMessages, messages)
 		);
-	}
+		const { _id, createdAt, text, user } = messages[0];
+		db.collection("chats").add({
+			_id,
+			createdAt,
+			text,
+			user,
+		});
+	}, []);
+
+	const signOut = () => {
+		auth.signOut()
+			.then(() => {
+				console.log("User signed Out ");
+			})
+			.catch((error) => {
+				console.log("An error happened");
+			});
+	};
 
 	return (
-		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-			<KeyboardAvoidingView
-				style={styles.container}
-				behavior={Platform.OS === "ios" ? "padding" : "height"}
-			>
-				<View>
-					<TextInput
-						style={styles.publish}
-						value={Message}
-						onChangeText={(Message) => setMessage(Message)}
-						placeholder="Publish something !(in the terminal)"
-						returnKeyType="go"
-						enablesReturnKeyAutomatically={true}
-						onSubmitEditing={() => publish()}
-						numberOfLines={30}
-					/>
-				</View>
-			</KeyboardAvoidingView>
+		<TouchableWithoutFeedback
+			onPress={Keyboard.dismiss}
+			style={styles.container}
+		>
+			<GiftedChat
+				messages={messages}
+				onSend={(messages) => onSend(messages)}
+				user={{
+					_id: auth?.currentUser?.displayName,
+					name: auth?.currentUser?.displayName,
+				}}
+				showUserAvatar
+			/>
 		</TouchableWithoutFeedback>
 	);
 }
@@ -68,5 +89,8 @@ const styles = StyleSheet.create({
 		borderRadius: 5,
 		width: 428,
 		fontSize: 20,
+	},
+	chat: {
+		width: 428,
 	},
 });
