@@ -27,28 +27,26 @@ export const renderAvatar = (props) => (
 export const renderBubble = (props) => (
 	<Bubble
 		{...props}
-		// renderTime={() => <Text>Time</Text>}
-		// renderTicks={() => <Text>Ticks</Text>}
 		containerStyle={{
-			left: { borderColor: "teal", borderWidth: 8 },
+			left: { borderColor: colors.primary, borderWidth: 8 },
 			right: {},
 		}}
 		wrapperStyle={{
-			left: { borderColor: "tomato", borderWidth: 4 },
-			right: {},
+			left: { borderColor: colors.background_textinput_left, borderWidth: 4 },
+			right: {borderColor: colors.background_textinput, borderWidth: 4 },
 		}}
 		bottomContainerStyle={{
-			left: { borderColor: "purple", borderWidth: 4 },
-			right: {},
+			left: { borderColor: colors.background_textinput_left, borderWidth: 4 },
+			right: {borderColor: colors.background_textinput, borderWidth: 4 },
 		}}
 		tickStyle={{}}
 		usernameStyle={{ color: "tomato", fontWeight: "100" }}
 		containerToNextStyle={{
-			left: { borderColor: "navy", borderWidth: 4 },
+			left: { borderColor: colors.primary, borderWidth: 4 },
 			right: {},
 		}}
 		containerToPreviousStyle={{
-			left: { borderColor: "mediumorchid", borderWidth: 4 },
+			left: { borderColor: colors.primary, borderWidth: 4 },
 			right: {},
 		}}
 	/>
@@ -66,9 +64,8 @@ export const renderSystemMessage = (props) => (
 export const renderMessage = (props) => (
 	<Message
 		{...props}
-		// renderDay={() => <Text>Date</Text>}
 		containerStyle={{
-			left: { backgroundColor: "lime" },
+			left: { backgroundColor: colors.primary },
 			right: { backgroundColor: colors.primary },
 		}}
 	/>
@@ -78,12 +75,12 @@ export const renderMessageText = (props) => (
 	<MessageText
 		{...props}
 		containerStyle={{
-			left: { backgroundColor: "yellow" },
+			left: { backgroundColor: colors.background_textinput_left },
 			right: { backgroundColor: colors.secondary },
 		}}
 		textStyle={{
-			left: { color: "red" },
-			right: { color: "green" },
+			left: { color: colors.text },
+			right: { color: colors.textLight },
 		}}
 		linkStyle={{
 			left: { color: "orange" },
@@ -94,11 +91,7 @@ export const renderMessageText = (props) => (
 );
 
 export const renderCustomView = ({ user }) => (
-	<View style={{ minHeight: 20, alignItems: "center" }}>
-		<Text>
-			Current user:
-			{user.name}
-		</Text>
-		<Text>From CustomView</Text>
+	<View style={{ minHeight: 10, alignItems: "center" }}>
+		<Text>{user.name}</Text>
 	</View>
 );

@@ -1,14 +1,7 @@
-import React, {
-	useLayoutEffect,
-	useState,
-	useCallback,
-	useEffect,
-} from "react";
-import { StyleSheet, TouchableWithoutFeedback, Keyboard } from "react-native";
-import colors from "../config/colors";
+import React, { useLayoutEffect, useState, useCallback } from "react";
+import { TouchableWithoutFeedback, Keyboard } from "react-native";
 import { auth, db } from "../firebase";
 import { GiftedChat } from "react-native-gifted-chat";
-import initialMessages from "./messages";
 import {
 	renderInputToolbar,
 	renderActions,
@@ -23,6 +16,7 @@ import {
 	renderMessageText,
 	renderCustomView,
 } from "./MessageContainer";
+import colors from "../config/colors";
 
 function Welcome(props) {
 	useLayoutEffect(() => {
@@ -55,27 +49,10 @@ function Welcome(props) {
 		});
 	}, []);
 
-	const signOut = () => {
-		auth.signOut()
-			.then(() => {
-				console.log("User signed Out ");
-			})
-			.catch((error) => {
-				console.log("An error happened");
-			});
-	};
-
-	
-	useEffect(() => {
-		setMessages(initialMessages.reverse());
-	}, []);
-	
 	const [text, setText] = useState("");
 	const [messages, setMessages] = useState([]);
 	return (
-		<TouchableWithoutFeedback
-			onPress={Keyboard.dismiss}
-		>
+		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 			<GiftedChat
 				messages={messages}
 				text={text}
@@ -89,7 +66,6 @@ function Welcome(props) {
 				alignTop
 				alwaysShowSend
 				scrollToBottom
-				// showUserAvatar
 				renderAvatarOnTop
 				renderUsernameOnMessage
 				bottomOffset={26}
@@ -103,10 +79,9 @@ function Welcome(props) {
 				renderSystemMessage={renderSystemMessage}
 				renderMessage={renderMessage}
 				renderMessageText={renderMessageText}
-				// renderMessageImage
 				renderCustomView={renderCustomView}
 				isCustomViewBottom
-				messagesContainerStyle={{ backgroundColor: "indigo" }}
+				messagesContainerStyle={{ backgroundColor: colors.primary }}
 				parsePatterns={(linkStyle) => [
 					{
 						pattern: /#(\w+)/,
