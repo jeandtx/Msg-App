@@ -61,7 +61,7 @@ function Welcome(props) {
 				user={{
 					_id: auth?.currentUser?.displayName,
 					name: auth?.currentUser?.displayName,
-					avatar: "https://placeimg.com/150/150/any",
+					avatar: "./assets/avatar.png",
 				}}
 				alignTop
 				alwaysShowSend

@@ -7,6 +7,7 @@ import {
 	TextInput,
 	Keyboard,
 	TouchableWithoutFeedback,
+	Alert,
 } from "react-native";
 import { auth } from "../firebase";
 
@@ -41,7 +42,7 @@ function Login({ navigation }) {
 			})
 			.catch((error) => {
 				var errorMessage = error.message;
-				alert(errorMessage);
+				Alert.alert("Register Error", errorMessage)
 			});
 	};
 
@@ -49,7 +50,16 @@ function Login({ navigation }) {
 		auth.signInWithEmailAndPassword(Username, Password).catch((error) => {
 			var errorCode = error.code;
 			var errorMessage = error.message;
-			alert(errorMessage);
+			Alert.alert("Login Error", errorMessage, [
+				{
+					text: "Retry",
+					onPress: () => console.log("Retry to login"),
+				},
+				{
+					text: "Create Account",
+					onPress: () => register(),
+				},
+			]);
 		});
 	};
 

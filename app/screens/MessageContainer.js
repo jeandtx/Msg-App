@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React from "react";
 import { View, Text } from "react-native";
 import {
@@ -14,11 +13,11 @@ export const renderAvatar = (props) => (
 	<Avatar
 		{...props}
 		containerStyle={{
-			left: { borderWidth: 3, borderColor: "red" },
+			left: { borderWidth: 3, borderColor: colors.primary },
 			right: {},
 		}}
 		imageStyle={{
-			left: { borderWidth: 3, borderColor: "blue" },
+			left: { borderWidth: 3, borderColor: colors.primary },
 			right: {},
 		}}
 	/>
@@ -40,7 +39,7 @@ export const renderBubble = (props) => (
 			right: {borderColor: colors.background_textinput, borderWidth: 4 },
 		}}
 		tickStyle={{}}
-		usernameStyle={{ color: "tomato", fontWeight: "100" }}
+		usernameStyle={{ color: colors.text}}
 		containerToNextStyle={{
 			left: { borderColor: colors.primary, borderWidth: 4 },
 			right: {},
@@ -90,8 +89,8 @@ export const renderMessageText = (props) => (
 	/>
 );
 
-export const renderCustomView = ({ user }) => (
+export const renderCustomView = () => (
 	<View style={{ minHeight: 10, alignItems: "center" }}>
-		<Text>{user.name}</Text>
+		<Text>Send by </Text>
 	</View>
 );
